@@ -1,0 +1,385 @@
+#!/usr/bin/env node
+
+/**
+ * Frontier Engineering Multi-Channel Notification Hook
+ * Zero external dependencies.
+ * Dispatches local OS alerts and rich notifications to:
+ *  - Discord Webhooks (Embeds with status colors & emojis)
+ *  - Telegram Bot API (HTML formatted messages)
+ *  - Slack Webhooks (Block Kit layout)
+ *  - Generic Webhooks (JSON payload)
+ *
+ * Usage:
+ *   node .frontier/scripts/notify.js --event=task_done --title="Task Completed" --message="Passed validation tests"
+ *   node .frontier/scripts/notify.js --event=circuit_breaker --title="Agent Blocked" --message="Stuck on error after 5 retries" --details="..."
+ *   node .frontier/scripts/notify.js --event=batch_done --title="All Tasks Completed" --message="Completed all [N] tasks"
+ *   node .frontier/scripts/notify.js --event=test
+ */
+
+const fs = require('fs');
+const path = require('path');
+const https = require('https');
+const http = require('http');
+const { execSync } = require('child_process');
+
+const NOTIFICATIONS_CONFIG_PATH = path.resolve(process.cwd(), '.frontier/notifications.json');
+const FRONTIER_CONFIG_PATH = path.resolve(process.cwd(), '.frontier/config.json');
+
+function getProjectName() {
+  if (fs.existsSync(FRONTIER_CONFIG_PATH)) {
+    try {
+      const cfg = JSON.parse(fs.readFileSync(FRONTIER_CONFIG_PATH, 'utf8'));
+      if (cfg.project) return cfg.project;
+    } catch (_) {}
+  }
+  return path.basename(process.cwd());
+}
+
+function loadNotificationChannels() {
+  let fileConfig = {};
+  if (fs.existsSync(NOTIFICATIONS_CONFIG_PATH)) {
+    try {
+      fileConfig = JSON.parse(fs.readFileSync(NOTIFICATIONS_CONFIG_PATH, 'utf8'));
+    } catch (e) {
+      console.warn('[Frontier Notify] Warning: Failed to parse .frontier/notifications.json:', e.message);
+    }
+  }
+
+  const channels = {
+    discord: (process.env.DISCORD_WEBHOOK_URL && process.env.DISCORD_WEBHOOK_URL.trim()) || (fileConfig.discordWebhookUrl && fileConfig.discordWebhookUrl.trim()) || null,
+    slack: (process.env.SLACK_WEBHOOK_URL && process.env.SLACK_WEBHOOK_URL.trim()) || (fileConfig.slackWebhookUrl && fileConfig.slackWebhookUrl.trim()) || null,
+    telegram: null,
+    generic: (process.env.FRONTIER_NOTIFY_WEBHOOK && process.env.FRONTIER_NOTIFY_WEBHOOK.trim()) || (fileConfig.webhookUrl && fileConfig.webhookUrl.trim()) || null
+  };
+
+  // Telegram credentials
+  const fileTg = fileConfig.telegram || {};
+  const tgToken = (process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_BOT_TOKEN.trim()) || (fileTg.botToken && fileTg.botToken.trim()) || null;
+  const tgChatId = (process.env.TELEGRAM_CHAT_ID && process.env.TELEGRAM_CHAT_ID.trim()) || (fileTg.chatId && fileTg.chatId.trim()) || null;
+  if (tgToken && tgChatId) {
+    channels.telegram = { botToken: tgToken, chatId: tgChatId };
+  }
+
+  return channels;
+}
+
+function parseArgs() {
+  const args = process.argv.slice(2);
+  const options = {
+    event: 'task_done', // task_done | batch_done | circuit_breaker | test
+    title: '',
+    message: '',
+    details: ''
+  };
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg.startsWith('--event=')) {
+      options.event = arg.replace('--event=', '');
+    } else if (arg.startsWith('--title=')) {
+      options.title = arg.replace('--title=', '');
+    } else if (arg.startsWith('--message=')) {
+      options.message = arg.replace('--message=', '');
+    } else if (arg.startsWith('--details=')) {
+      options.details = arg.replace('--details=', '');
+    } else if (arg === '--event' && args[i + 1]) {
+      options.event = args[++i];
+    } else if (arg === '--title' && args[i + 1]) {
+      options.title = args[++i];
+    } else if (arg === '--message' && args[i + 1]) {
+      options.message = args[++i];
+    } else if (arg === '--details' && args[i + 1]) {
+      options.details = args[++i];
+    }
+  }
+
+  return options;
+}
+
+const EVENT_CONFIG = {
+  task_done: {
+    color: 0x2ecc71, // Green
+    emoji: '✅',
+    defaultTitle: 'Task Completed'
+  },
+  batch_done: {
+    color: 0x3498db, // Blue
+    emoji: '🎉',
+    defaultTitle: 'All Tasks Completed'
+  },
+  circuit_breaker: {
+    color: 0xe74c3c, // Red
+    emoji: '🚨',
+    defaultTitle: 'Agent Blocked (Circuit Breaker)'
+  },
+  test: {
+    color: 0x9b59b6, // Purple
+    emoji: '🧪',
+    defaultTitle: 'Frontier Notification Test'
+  }
+};
+
+function triggerLocalDesktopNotification(title, message) {
+  try {
+    if (process.platform === 'darwin') {
+      const script = `display notification "${message.replace(/"/g, '\\"')}" with title "${title.replace(/"/g, '\\"')}" sound name "Glass"`;
+      execSync(`osascript -e '${script}'`, { stdio: 'ignore' });
+    } else if (process.platform === 'linux') {
+      execSync(`notify-send "${title}" "${message}"`, { stdio: 'ignore' });
+    } else if (process.platform === 'win32') {
+      const ps = `powershell -Command "[reflection.assembly]::loadwithpartialname('System.Windows.Forms'); [System.Windows.Forms.MessageBox]::Show('${message.replace(/'/g, "''")}', '${title.replace(/'/g, "''")}')"`;
+      execSync(ps, { stdio: 'ignore' });
+    }
+  } catch (_) {}
+}
+
+function httpPost(urlStr, payload) {
+  const payloadString = typeof payload === 'string' ? payload : JSON.stringify(payload);
+  const parsedUrl = new URL(urlStr);
+  const client = parsedUrl.protocol === 'https:' ? https : http;
+
+  return new Promise((resolve, reject) => {
+    const req = client.request(
+      {
+        hostname: parsedUrl.hostname,
+        port: parsedUrl.port || (parsedUrl.protocol === 'https:' ? 443 : 80),
+        path: parsedUrl.pathname + parsedUrl.search,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(payloadString)
+        },
+        timeout: 6000
+      },
+      (res) => {
+        let body = '';
+        res.on('data', (chunk) => (body += chunk));
+        res.on('end', () => {
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            resolve({ success: true, statusCode: res.statusCode });
+          } else {
+            reject(new Error(`HTTP ${res.statusCode}: ${body.substring(0, 200)}`));
+          }
+        });
+      }
+    );
+
+    req.on('error', (err) => reject(err));
+    req.on('timeout', () => {
+      req.destroy();
+      reject(new Error('Request timed out (6s)'));
+    });
+    req.write(payloadString);
+    req.end();
+  });
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+// 1. Discord Dispatcher (Rich Embeds)
+async function sendDiscord(webhookUrl, options, projectName, eventCfg) {
+  const title = options.title || eventCfg.defaultTitle;
+  const fullTitle = `${eventCfg.emoji} [${projectName}] ${title}`;
+
+  const fields = [];
+  if (options.details) {
+    fields.push({
+      name: 'Details',
+      value: options.details.length > 1024 ? options.details.substring(0, 1020) + '...' : options.details,
+      inline: false
+    });
+  }
+
+  const payload = {
+    username: `${projectName} Agent`,
+    embeds: [
+      {
+        title: fullTitle,
+        description: options.message || undefined,
+        color: eventCfg.color,
+        fields: fields.length > 0 ? fields : undefined,
+        timestamp: new Date().toISOString(),
+        footer: {
+          text: 'Frontier Engineering • Autonomous Loop'
+        }
+      }
+    ]
+  };
+
+  return httpPost(webhookUrl, payload);
+}
+
+// 2. Telegram Dispatcher (Bot API HTML)
+async function sendTelegram(tgConfig, options, projectName, eventCfg) {
+  const title = options.title || eventCfg.defaultTitle;
+  let text = `<b>${eventCfg.emoji} [${escapeHtml(projectName)}] ${escapeHtml(title)}</b>\n`;
+
+  if (options.message) {
+    text += `\n${escapeHtml(options.message)}\n`;
+  }
+  if (options.details) {
+    const trimmedDetails = options.details.length > 2000 ? options.details.substring(0, 1990) + '...' : options.details;
+    text += `\n<code>${escapeHtml(trimmedDetails)}</code>\n`;
+  }
+  text += `\n<i>Frontier Engineering • Autonomous Loop</i>`;
+
+  const url = `https://api.telegram.org/bot${tgConfig.botToken}/sendMessage`;
+  const payload = {
+    chat_id: tgConfig.chatId,
+    text: text,
+    parse_mode: 'HTML',
+    disable_web_page_preview: true
+  };
+
+  return httpPost(url, payload);
+}
+
+// 3. Slack Dispatcher (Block Kit)
+async function sendSlack(webhookUrl, options, projectName, eventCfg) {
+  const title = options.title || eventCfg.defaultTitle;
+  const fullTitle = `${eventCfg.emoji} [${projectName}] ${title}`;
+
+  const blocks = [
+    {
+      type: 'header',
+      text: {
+        type: 'plain_text',
+        text: fullTitle.substring(0, 150),
+        emoji: true
+      }
+    }
+  ];
+
+  if (options.message) {
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: options.message
+      }
+    });
+  }
+
+  if (options.details) {
+    const trimmedDetails = options.details.length > 2000 ? options.details.substring(0, 1990) + '...' : options.details;
+    blocks.push({
+      type: 'section',
+      text: {
+        type: 'mrkdwn',
+        text: `\`\`\`${trimmedDetails}\`\`\``
+      }
+    });
+  }
+
+  blocks.push({
+    type: 'context',
+    elements: [
+      {
+        type: 'mrkdwn',
+        text: `Frontier Engineering • Autonomous Loop • ${new Date().toLocaleTimeString()}`
+      }
+    ]
+  });
+
+  return httpPost(webhookUrl, { blocks });
+}
+
+// 4. Generic Webhook Dispatcher (JSON)
+async function sendGeneric(webhookUrl, options, projectName, eventCfg) {
+  const title = options.title || eventCfg.defaultTitle;
+  const payload = {
+    project: projectName,
+    event: options.event,
+    title: `${eventCfg.emoji} [${projectName}] ${title}`,
+    message: options.message,
+    details: options.details,
+    timestamp: new Date().toISOString()
+  };
+
+  return httpPost(webhookUrl, payload);
+}
+
+async function main() {
+  const options = parseArgs();
+  const eventCfg = EVENT_CONFIG[options.event] || EVENT_CONFIG.task_done;
+  const projectName = getProjectName();
+  const title = options.title || eventCfg.defaultTitle;
+
+  // 1. Terminal Console Feedback
+  const colors = {
+    reset: '\x1b[0m',
+    green: '\x1b[32m',
+    yellow: '\x1b[33m',
+    red: '\x1b[31m',
+    cyan: '\x1b[36m',
+    purple: '\x1b[35m',
+    bold: '\x1b[1m'
+  };
+
+  const badgeColor = options.event === 'circuit_breaker'
+    ? colors.red
+    : options.event === 'batch_done'
+    ? colors.cyan
+    : options.event === 'test'
+    ? colors.purple
+    : colors.green;
+
+  console.log(`\n🔔 ${badgeColor}${eventCfg.emoji} [${projectName}] ${title}${colors.reset}`);
+  if (options.message) console.log(`   ${options.message}`);
+  if (options.details) console.log(`   ${colors.yellow}Details:${colors.reset} ${options.details}`);
+
+  // 2. Desktop Notification (macOS / Linux / Windows)
+  triggerLocalDesktopNotification(`[${projectName}] ${title}`, options.message || options.details || 'Frontier agent update');
+
+  // 3. Dispatch to all configured remote channels in parallel
+  const channels = loadNotificationChannels();
+  const tasks = [];
+
+  if (channels.discord && !channels.discord.includes('YOUR_DISCORD_WEBHOOK_URL')) {
+    tasks.push(
+      sendDiscord(channels.discord, options, projectName, eventCfg)
+        .then(() => console.log('   [Frontier Notify] Discord notification dispatched.'))
+        .catch((err) => console.warn('   [Frontier Notify] Discord warning:', err.message))
+    );
+  }
+
+  if (channels.telegram) {
+    tasks.push(
+      sendTelegram(channels.telegram, options, projectName, eventCfg)
+        .then(() => console.log('   [Frontier Notify] Telegram notification dispatched.'))
+        .catch((err) => console.warn('   [Frontier Notify] Telegram warning:', err.message))
+    );
+  }
+
+  if (channels.slack && !channels.slack.includes('YOUR_SLACK_WEBHOOK_URL')) {
+    tasks.push(
+      sendSlack(channels.slack, options, projectName, eventCfg)
+        .then(() => console.log('   [Frontier Notify] Slack notification dispatched.'))
+        .catch((err) => console.warn('   [Frontier Notify] Slack warning:', err.message))
+    );
+  }
+
+  if (channels.generic && !channels.generic.includes('YOUR_WEBHOOK_URL')) {
+    tasks.push(
+      sendGeneric(channels.generic, options, projectName, eventCfg)
+        .then(() => console.log('   [Frontier Notify] Generic webhook dispatched.'))
+        .catch((err) => console.warn('   [Frontier Notify] Webhook warning:', err.message))
+    );
+  }
+
+  if (tasks.length > 0) {
+    await Promise.allSettled(tasks);
+  } else if (options.event === 'test') {
+    console.log('\n💡 [Frontier Notify] No remote webhooks configured. To enable Discord, Telegram, or Slack notifications, edit .frontier/notifications.json');
+  }
+
+  // Always exit 0 so agent loops never break on notification network failures
+  process.exit(0);
+}
+
+main();

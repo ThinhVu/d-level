@@ -1,0 +1,23 @@
+{
+  "name": "d-level",
+  "version": "1.0.0",
+  "description": "The Autonomous Software Delivery Engine for AI Coding Agents - Grounded in Kiro Frontier Engineering principles",
+  "keywords": [
+    "ai-agent",
+    "skills",
+    "d-level",
+    "frontier-engineering",
+    "kiro",
+    "claude-code",
+    "antigravity",
+    "cursor",
+    "spec-driven-development",
+    "agentic-coding"
+  ],
+  "author": "Thinh Vu <thinhvu>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ThinhVu/d-level.git"
+  }
+}

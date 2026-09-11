@@ -1,0 +1,31 @@
+# FRONTIER.md - Project Frontier Configuration
+
+This file defines the operational boundaries, testing harnesses, and environment configuration for AI agents working in this repository.
+
+## Repository Profile
+- **Project Name**: {{PROJECT_NAME}}
+- **Primary Language / Framework**: {{FRAMEWORK}}
+- **Package Manager**: {{PACKAGE_MANAGER}}
+
+## Test Harness & Validation
+- **Unit Test Command**: `{{TEST_CMD}}`
+- **Lint Command**: `{{LINT_CMD}}`
+- **Typecheck Command**: `{{TYPECHECK_CMD}}`
+- **Property-Based Test Command**: `{{PROPERTY_TEST_CMD}}`
+- **Local Dev Server**: `{{DEV_CMD}}`
+- **Headless Browser Test**: `{{BROWSER_TEST_CMD}}`
+
+## Agent Hooks & Notifications
+- **Notification Script**: `.frontier/scripts/notify.js`
+- **Webhook Target**: `{{NOTIFY_WEBHOOK_URL}}` (or env `FRONTIER_NOTIFY_WEBHOOK`)
+- **Circuit Breaker Threshold**: 5 failed self-corrections
+
+## Boundary Contract Files
+These files represent the permanent behavioral contract of the system. Do not delete or loosen assertions in these tests:
+- `tests/e2e/**`
+- `tests/contracts/**`
+- `tests/properties/**`
+
+## Active Spikes
+Temporary branches or directories used for `/spike-off` architectural explorations:
+- Branch prefix: `spike/*`

@@ -1,0 +1,44 @@
+# Deep Reverse-Engineering Audit: {{SUBSYSTEM_NAME}}
+
+> **Target**: `{{SOURCE_PATH}}`  
+> **Destination**: `{{TARGET_PATH}}`  
+> **Auditor**: Frontier Agent (Phase 1 Gate of `/agent-complete`)  
+> **Status**: APPROVED FOR IMPLEMENTATION
+
+---
+
+## 1. API Surface & Transport
+- **Endpoints & Verbs**:
+  - `GET /path`: Description, auth requirements, query params.
+  - `POST /path`: Request body schema, headers, status codes.
+- **Error Response Structures**:
+  - Format: `{ error: string, code: number, message: string }`
+
+---
+
+## 2. State Machines & Lifecycles
+- **Entity States**: `[STATE_A, STATE_B, STATE_C]`
+- **Allowed Transitions**:
+  - `STATE_A` ➔ `STATE_B`: Triggered by actor/event, guard conditions.
+- **Timeouts & Auto-Transitions**: Background cron/timers affecting state.
+
+---
+
+## 3. Calculations, Invariants & Business Rules
+- **Core Formulas**: Exact arithmetic, precision (e.g. integer cents vs floats), rounding modes.
+- **Invariants**: Conditions that must NEVER be violated.
+- **Idempotency Rules**: Keys and deduplication behavior.
+
+---
+
+## 4. Side Effects & External Communications
+- **Database Mutations**: Affected tables/collections, persistent state writes, and transaction boundaries.
+- **Webhooks & Third-Party APIs**: Outbound HTTP requests, external partner APIs, payment/notification providers.
+- **Realtime & Message Queues**: Pub/sub events, background job dispatchers, worker queues, and socket broadcasts.
+
+---
+
+## 5. Edge Cases & Known Legacy Quirks
+- **Null / Missing Value Handling**: Fallbacks and defaults.
+- **Concurrency & Race Conditions**: Optimistic locking or mutex requirements.
+- **Legacy Debt**: Quirks that must be intentionally preserved for backwards compatibility.

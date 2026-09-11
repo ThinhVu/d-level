@@ -1,0 +1,62 @@
+# Release Impact Assessment: v{{VERSION}}
+
+> **Release Date**: {{DATE}}  
+> **Overall Risk Level**: `[LOW | MEDIUM | HIGH | CRITICAL]`  
+> **Prepared by**: Frontier Agent via `/let-it-ship`
+
+---
+
+## 1. Executive Summary & Blast Radius
+- **Summary of Release**: High-level overview of changes in this release.
+- **Affected Subsystems**:
+  - List services, backend modules, or frontend applications modified.
+- **Client & Consumer Impact**:
+  - Do mobile apps, web clients, or 3rd-party API consumers require updates?
+
+---
+
+## 2. Database & Data Migration Impact
+- **Schema Changes**:
+  - New collections / tables / fields added.
+  - Altered or deprecated columns / attributes.
+- **Migration Scripts**:
+  - Required migration commands: `npm run migrate` (or equivalent).
+  - Estimated run time & lock contention risk.
+- **Data Rollback Feasibility**:
+  - Can the database be rolled back safely without data loss? `[YES / NO / ONE-WAY]`
+
+---
+
+## 3. External Integrations & Configuration Impact
+- **Environment Variables**:
+  - New `.env` keys required before deployment.
+- **Third-Party API & Webhook Contracts**:
+  - Any altered webhooks, payment callbacks, or external partner integrations.
+
+---
+
+## 4. Rollout Strategy & Verification Plan
+- **Deployment Type**: `[Rolling Update | Canary | Blue-Green | Maintenance Window]`
+- **Pre-Flight Verification**:
+  - Automated boundary & unit tests: `npm test`
+- **Autonomous Verification Protocol & Evidence**:
+  - Machine-executable test scenarios & captured evidence: `docs/verification/v{{VERSION}}.md`
+- **Post-Deploy Smoke Checks**:
+  - Health check endpoint: `GET /health` or `GET /api/v1/status`
+  - Critical path verification: User login, core transaction / business flow.
+
+---
+
+## 5. Rollback & Contingency Plan
+- **Rollback Triggers**:
+  - E.g. Error rate exceeds 1% within 15 minutes of deploy.
+  - E.g. P99 latency spikes above 500ms.
+- **Exact Rollback Commands**:
+  - Steps to revert deployment and database state safely.
+
+---
+
+## 6. Observability & Telemetry
+- **Key Metrics to Watch**:
+  - Error logs / Exception alerts.
+  - Key API endpoint throughput and latency dashboards.

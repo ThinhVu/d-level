@@ -1,0 +1,9 @@
+{
+  "discordWebhookUrl": "",
+  "slackWebhookUrl": "",
+  "telegram": {
+    "botToken": "",
+    "chatId": ""
+  },
+  "webhookUrl": ""
+}
