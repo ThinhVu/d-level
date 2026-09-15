@@ -1,9 +1,9 @@
 ---
-name: ask-frontier
-description: Navigation and routing assistant for the Frontier Engineering workflow. Answers questions about which skill to use for any given task. Triggers on /ask-frontier.
+name: ask-d-level
+description: Navigation and routing assistant for the D-Level workflow. Answers questions about which skill to use for any given task. Triggers on /ask-d-level.
 ---
 
-# /ask-frontier
+# /ask-d-level
 
 > **Tenet**: Navigating autonomous workflows and engineering leverage.  
 > **Source**: [kiro.dev/topics/frontier-engineering](https://kiro.dev/topics/frontier-engineering)
@@ -14,17 +14,17 @@ This skill acts as your **chief-of-staff navigator**. Tell it what you want to a
 ## When to Reach for It
 - Whenever you are unsure which skill applies to your current situation.
 - When planning a multi-phase feature, refactor, or incident investigation.
-- Triggered by typing `/ask-frontier <your query>`.
+- Triggered by typing `/ask-d-level <your query>`.
 
 ## Standalone & Synergy Characteristics
-- **Standalone**: Routes intelligently across all Frontier Engineering skills (from spec drafting to autonomous loops, release orchestration, and incident postmortems).
-- **Synergy with Frontier Suite**: Acts as the central dispatcher and router for the entire Frontier Engineering suite, ensuring agents and developers select the optimal workflow for their goals.
+- **Standalone**: Routes intelligently across all D-Level skills (from spec drafting to autonomous loops, release orchestration, and incident postmortems).
+- **Synergy with D-Level Suite**: Acts as the central dispatcher and router for the entire D-Level suite, ensuring agents and developers select the optimal workflow for their goals.
 
 ---
 
-## 🔄 The 4-Phase Frontier Teams Lifecycle
+## 🔄 The 4-Phase D-Level Teams Lifecycle
 
-When building production features, follow the canonical Kiro Frontier Teams loop:
+When building production features, follow the canonical D-Level Teams loop:
 1. **Capture Intent**: `/write-intent` (turn natural language into structured acceptance criteria).
 2. **Design Architecture**: `/draft-rfc` & `/spike-off` (system design, dependency-sequenced task plan).
 3. **Build to Context**: `/let-it-cook` & `/agent-complete` (unattended autonomous build with automated feedback).
@@ -36,13 +36,14 @@ When building production features, follow the canonical Kiro Frontier Teams loop
 
 | If your goal is... | Recommended Skill |
 |---|---|
-| Initialize or configure this repo for AI agents | ➡️ `/setup-frontier-engineering` |
+| Initialize or configure this repo for AI agents | ➡️ `/setup-d-level` |
 | Clarify vague requirements & definition of "Done" | ➡️ `/write-intent` |
 | Launch a 30m+ autonomous task without babysitting | ➡️ `/let-it-cook` |
 | Make legacy code agent-friendly or extract AS-IS spec | ➡️ `/agent-ready` |
 | Speed up local test & feedback cycles to <10s | ➡️ `/fast-loop` |
 | Settle an architectural debate between 2 options | ➡️ `/spike-off` |
-| Rewrite a messy module safely without regressions | ➡️ `/safe-rewrite` |
+| Rewrite a module with 100% contract preservation (API/SDK) | ➡️ `/safe-rewrite` |
+| Modernize internal subsystem, migrate callers & prune dead code | ➡️ `/smart-rewrite` |
 | End-to-end enterprise subsystem modernization & parity | ➡️ `/agent-complete` |
 | Fuzz edge-case correctness with randomized properties | ➡️ `/property-test` |
 | Deep review on code diff before merging | ➡️ `/staff-review` |
@@ -57,10 +58,10 @@ When building production features, follow the canonical Kiro Frontier Teams loop
 
 ## Example Usage
 ```
-User: /ask-frontier We want to migrate our database from MongoDB to Postgres, but the codebase is huge and we aren't sure if Prisma or Drizzle is faster.
+User: /ask-d-level We want to migrate our database from MongoDB to Postgres, but the codebase is huge and we aren't sure if Prisma or Drizzle is faster.
 
 Agent Response:
-Here is your Frontier Engineering game plan:
+Here is your D-Level game plan:
 1. Run `/spike-off Prisma vs Drizzle for user order querying` to build two quick prototype spikes with benchmark evidence.
 2. Once the direction is chosen, run `/draft-rfc Database Migration from Mongo to Postgres` to formalize the migration strategy and rollback plan.
 3. Lock your boundary invariant tests with `/safe-rewrite` so data layer changes never break external API contracts.

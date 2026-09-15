@@ -4,7 +4,7 @@
 > **Release Date**: {{DATE}}  
 > **Execution Mode**: `[AUTONOMOUS_AGENT_RUN | EVALUATOR_SUBAGENT | HYBRID_AUDIT]`  
 > **Overall Status**: `[PENDING | PASSED | FAILED]`  
-> **Executed By**: `[Frontier Agent / Evaluator Subagent]`  
+> **Executed By**: `[D-Level Agent / Evaluator Subagent]`  
 > **Governing Reviewer**: `[Human Lead / Release Manager]`
 
 ---

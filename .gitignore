@@ -2,6 +2,6 @@ node_modules/
 .DS_Store
 *.log
 .test-skills/
-.frontier/
+.d-level/notifications.json
 dist/
 .tmp/

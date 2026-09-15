@@ -10,7 +10,7 @@ description: Reviews recent agent mistakes or frictions, identifies root causes,
 > **Source**: [kiro.dev/topics/frontier-engineering/tune-your-setup](https://kiro.dev/topics/frontier-engineering/tune-your-setup/)
 
 ## Purpose & Objective
-This is the **meta-learning feedback loop** of Frontier Engineering.
+This is the **meta-learning feedback loop** of D-Level Engineering.
 Whenever an agent hallucinates an import, uses a deprecated API, breaks a coding style rule, or pulls you into the loop unnecessarily, you run `/tune-up`.
 It analyzes the incident, discovers why the agent stumbled, and writes a crisp, permanent steering rule into `AGENTS.md` (or generates a helper script/skill) so **no agent ever makes that mistake again**.
 
@@ -21,8 +21,8 @@ It analyzes the incident, discovers why the agent stumbled, and writes a crisp, 
 - Triggered by typing `/tune-up [description of mistake or friction]`.
 
 ## Standalone & Synergy Characteristics
-- **Standalone**: Directly maintains `.frontier/tuning-log.md` and appends verified guidelines to `AGENTS.md`.
-- **Synergy with Frontier Suite**: Powers the continuous learning flywheel across all skills—capturing mistakes from `/let-it-cook` or postmortems from `/postmortem` to update steering rules so agents never repeat the same mistake.
+- **Standalone**: Directly maintains `.d-level/tuning-log.md` and appends verified guidelines to `AGENTS.md`.
+- **Synergy with D-Level Suite**: Powers the continuous learning flywheel across all skills—capturing mistakes from `/let-it-cook` or postmortems from `/postmortem` to update steering rules so agents never repeat the same mistake.
 
 ---
 
@@ -41,7 +41,7 @@ Convert the lesson into an unambiguous, agent-actionable directive.
 
 ### Step 3: Commit the Rule & Update Log
 1. Append the new rule to the appropriate section of `AGENTS.md`.
-2. Record the retrospective entry in `.frontier/tuning-log.md`:
+2. Record the retrospective entry in `.d-level/tuning-log.md`:
 ```markdown
 ### [YYYY-MM-DD] Prevent Direct User Role Checking
 - **Context**: Agent implemented a permission check by inspecting `user.roles.includes('ADMIN')`.

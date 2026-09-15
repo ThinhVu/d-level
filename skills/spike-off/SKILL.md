@@ -19,7 +19,7 @@ Implementation details are cheap to change; architectural commitments and depend
 
 ## Standalone & Synergy Characteristics
 - **Standalone**: Creates isolated spike branches or scratch directories, implements realistic minimal working examples, and benchmarks them.
-- **Synergy with Frontier Suite**: Resolves architectural debates before writing full system specifications in `/draft-rfc`, producing quantitative benchmarks (performance, bundle size, DX, line count) to inform decisions.
+- **Synergy with D-Level Suite**: Resolves architectural debates before writing full system specifications in `/draft-rfc`, producing quantitative benchmarks (performance, bundle size, DX, line count) to inform decisions.
 
 ---
 

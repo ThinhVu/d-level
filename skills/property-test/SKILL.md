@@ -5,7 +5,7 @@ description: Generates property-based test suites and randomized fuzz tests dire
 
 # /property-test
 
-> **Frontier Teams Tenet**: Correctness by design, not just speed by default.  
+> **D-Level Teams Tenet**: Correctness by design, not just speed by default.  
 > *"Property-based testing extracts testable properties directly from requirements and generates hundreds of randomized test cases probing edge cases no human would write by hand. Code is verified against intent before it ships, not after."*  
 > **Source**: [kiro.dev/topics/frontier-teams](https://kiro.dev/topics/frontier-teams/)
 

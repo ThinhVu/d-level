@@ -1,4 +1,4 @@
-# ⚡ D-Level: Frontier Engineering Suite
+# ⚡ D-Level: Autonomous Software Delivery Engine
 
 > A production-grade, composable AI agent skills collection based on the **[Frontier Engineering manifesto by Kiro](https://kiro.dev/topics/frontier-engineering)**.  
 > The autonomous delivery engine for AI coding agents (Antigravity, Claude Code, Cursor, Windsurf, OpenCode).
@@ -29,12 +29,12 @@ npx skills@latest add ThinhVu/d-level
 Then initialize your repository:
 
 ```
-/setup-frontier-engineering
+/setup-d-level
 ```
 
 This scans your workspace and configures:
 - **Steering Contract (`AGENTS.md`)**: Detects fast test/lint loops, architectural boundaries, and safety guardrails.
-- **Continuous Meta-Tuning (`.frontier/`)**: Establishes the failure-capture flywheel so your agent continually improves.
+- **Continuous Meta-Tuning (`.d-level/`)**: Establishes the failure-capture flywheel so your agent continually improves.
 
 ---
 
@@ -42,11 +42,11 @@ This scans your workspace and configures:
 
 A common failure mode in AI-assisted development is lack of clear boundaries—agents jumping into unstructured coding without intent, verification, or guardrails.
 
-The Frontier Engineering suite provides an end-to-end, structured engineering workflow covering every layer of the delivery lifecycle:
+The D-Level suite provides an end-to-end, structured engineering workflow covering every layer of the delivery lifecycle:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                   THE FRONTIER AGENTIC DELIVERY LIFECYCLE                   │
+│                   THE D-LEVEL AGENTIC DELIVERY LIFECYCLE                    │
 ├──────────────────────────────────────┬──────────────────────────────────────┤
 │  STRATEGIC & ARCHITECTURAL STAGES    │  EXECUTION & VERIFICATION ENGINE     │
 ├──────────────────────────────────────┼──────────────────────────────────────┤
@@ -67,7 +67,7 @@ The Frontier Engineering suite provides an end-to-end, structured engineering wo
 
 ### 100% Self-Contained Autonomy
 This suite provides an end-to-end, self-sufficient framework out of the box:
-- **Project Steering Contract**: Set up steering and guardrails (`/setup-frontier-engineering`).
+- **Project Steering Contract**: Set up steering and guardrails (`/setup-d-level`).
 - **Autonomous Delivery**: Execute multi-ticket batches with circuit breakers (`/let-it-cook`).
 - **Legacy Modernization**: Deep audit and migration with behavioral parity (`/agent-complete`).
 - **Correctness & Safety**: Fuzz critical invariants (`/property-test`) and shield credentials (`/guardrails`).
@@ -76,9 +76,9 @@ This suite provides an end-to-end, self-sufficient framework out of the box:
 
 ---
 
-## 🔄 The Frontier Teams Lifecycle: From Intent to Production
+## 🔄 The D-Level Teams Lifecycle: From Intent to Production
 
-Frontier engineering teams do not jump straight into typing syntax. As highlighted by [Kiro's Frontier Teams analysis](https://kiro.dev/topics/frontier-teams/), production teams restructure their workflow into 4 synchronized stages:
+D-Level engineering teams do not jump straight into typing syntax. As highlighted by [Kiro's Frontier Teams analysis](https://kiro.dev/topics/frontier-teams/), production teams restructure their workflow into 4 synchronized stages:
 
 ```
 ┌───────────────────┐      ┌───────────────────┐      ┌───────────────────┐      ┌───────────────────┐
@@ -101,11 +101,11 @@ Every skill adheres strictly to **"Do one thing and do it best"**:
 
 ### 🧭 Navigation & Setup
 
-#### 1. [`/setup-frontier-engineering`](skills/setup-frontier-engineering/SKILL.md)
+#### 1. [`/setup-d-level`](skills/setup-d-level/SKILL.md)
 - **Core Tenet**: Building the setup that builds the software.
-- **Single Responsibility**: Run-once repository initialization. Scans project tools, generates `AGENTS.md`, configures fast feedback commands, scaffolds `.frontier/scripts/notify.js`, and initializes `.frontier/`.
+- **Single Responsibility**: Run-once repository initialization. Scans project tools, generates `AGENTS.md`, configures fast feedback commands, scaffolds `.d-level/scripts/notify.js`, and initializes `.d-level/`.
 
-#### 2. [`/ask-frontier`](skills/ask-frontier/SKILL.md)
+#### 2. [`/ask-d-level`](skills/ask-d-level/SKILL.md)
 - **Core Tenet**: Workflow guidance & cognitive leverage.
 - **Single Responsibility**: Your chief-of-staff navigator. Describe what you want to achieve, and it outlines the exact sequence of skills to invoke across the 4-phase lifecycle.
 
@@ -147,13 +147,16 @@ Every skill adheres strictly to **"Do one thing and do it best"**:
 
 #### 10. [`/safe-rewrite`](skills/safe-rewrite/SKILL.md)
 - **Kiro Principle 6**: [Treat code as disposable](https://kiro.dev/topics/frontier-engineering/code-is-disposable/)
-- **Single Responsibility**: Locks external boundary invariant tests, discards old tangled implementations, and rebuilds cleanly from scratch with zero regression risk.
+- **Single Responsibility**: Locks external boundary invariant tests, discards old tangled implementations, and rebuilds cleanly from scratch with 100% black-box contract preservation (Public APIs, SDKs, Shared Libraries).
 
-#### 11. [`/agent-complete`](skills/agent-complete/SKILL.md)
+#### 11. [`/smart-rewrite`](skills/smart-rewrite/SKILL.md)
+- **Deep Modules & Clean Architecture**: Unifies application subsystems, migrates consumers to a canonical pipeline, tears down transitional scaffolding, and eliminates dead code without cargo-cult backward compatibility wrappers.
+
+#### 12. [`/agent-complete`](skills/agent-complete/SKILL.md)
 - **Enterprise Modernization Engine**: The Sovereign Law of Legacy Modernization.
 - **Single Responsibility**: End-to-end industrial migration orchestrator. Delivers the "Definition of Done" (DoD) to complement `/agent-ready` (DoR). Executes a 4-phase gated pipeline: Deep Reverse-Engineering Audit (5 logic pillars) ➔ Invariant Schemas & Tracer-Bullet Tickets ➔ Autonomous Parity Loop (Contract test first) ➔ Parity Verification & Staff Review.
 
-#### 12. [`/guardrails`](skills/guardrails/SKILL.md)
+#### 13. [`/guardrails`](skills/guardrails/SKILL.md)
 - **Kiro Principle 8**: [Trust the boundaries, not the agent](https://kiro.dev/topics/frontier-engineering/trust-the-boundaries/)
 - **Single Responsibility**: Enforces file sandboxes, gates irreversible commands (force pushes, deletions), and shields production credentials for safe unsupervised execution.
 
@@ -161,19 +164,19 @@ Every skill adheres strictly to **"Do one thing and do it best"**:
 
 ### 📑 Beyond Code: Operations & Architecture Docs
 
-#### 13. [`/draft-rfc`](skills/draft-rfc/SKILL.md)
+#### 14. [`/draft-rfc`](skills/draft-rfc/SKILL.md)
 - **Kiro Principle 9.1**: [Use agents for everything — Architecture Design](https://kiro.dev/topics/frontier-engineering/agents-for-everything/)
 - **Single Responsibility**: Generates comprehensive Architecture RFCs (`docs/rfc/XXXX-<title>.md`) with context, Mermaid topology diagrams, tradeoffs, and zero-downtime rollout plans.
 
-#### 14. [`/postmortem`](skills/postmortem/SKILL.md)
+#### 15. [`/postmortem`](skills/postmortem/SKILL.md)
 - **Kiro Principle 9.2**: [Use agents for everything — Incident RCA](https://kiro.dev/topics/frontier-engineering/agents-for-everything/)
 - **Single Responsibility**: Investigates production failures from logs/traces, traces git commits, executes a 5-Whys root cause analysis, and produces a blameless postmortem.
 
-#### 15. [`/runbook`](skills/runbook/SKILL.md)
+#### 16. [`/runbook`](skills/runbook/SKILL.md)
 - **Kiro Principle 9.3**: [Use agents for everything — Operational Procedures](https://kiro.dev/topics/frontier-engineering/agents-for-everything/)
 - **Single Responsibility**: Writes executable operational runbooks (`docs/runbooks/<task>.md`) with pre-flight checks, exact shell commands, health verifications, and rollback steps.
 
-#### 16. [`/let-it-ship`](skills/let-it-ship/SKILL.md)
+#### 17. [`/let-it-ship`](skills/let-it-ship/SKILL.md)
 - **Kiro Principle 9.4**: [Use agents for everything — Release Notes & Changelogs](https://kiro.dev/topics/frontier-engineering/agents-for-everything/)
 - **Single Responsibility**: Automated release publisher. Inspects git commit history, determines SemVer bumps, compiles Keep a Changelog entries (`CHANGELOG.md`), drafts executive GitHub Release Notes, compiles Production Impact Assessments (`docs/releases/vX.Y.Z-impact.md`), and triggers release notification webhooks.
 
@@ -181,9 +184,9 @@ Every skill adheres strictly to **"Do one thing and do it best"**:
 
 ### 🔄 Continuous Meta-Tuning
 
-#### 17. [`/tune-up`](skills/tune-up/SKILL.md)
+#### 18. [`/tune-up`](skills/tune-up/SKILL.md)
 - **Kiro Principle 10**: [Continuously tune your agent setup](https://kiro.dev/topics/frontier-engineering/tune-your-setup/)
-- **Single Responsibility**: The learning flywheel. When an agent stumbles, `/tune-up` analyzes the root cause and appends a permanent, enforceable rule into `AGENTS.md` and `.frontier/tuning-log.md`.
+- **Single Responsibility**: The learning flywheel. When an agent stumbles, `/tune-up` analyzes the root cause and appends a permanent, enforceable rule into `AGENTS.md` and `.d-level/tuning-log.md`.
 
 ---
 
@@ -191,9 +194,9 @@ Every skill adheres strictly to **"Do one thing and do it best"**:
 
 ```
 skills/
-├── skills/                        # 17 Standard AI Agent Skills (SKILL.md format)
-│   ├── setup-frontier-engineering/SKILL.md
-│   ├── ask-frontier/SKILL.md
+├── skills/                        # 18 Standard AI Agent Skills (SKILL.md format)
+│   ├── setup-d-level/SKILL.md
+│   ├── ask-d-level/SKILL.md
 │   ├── write-intent/SKILL.md
 │   ├── let-it-cook/SKILL.md
 │   ├── fast-loop/SKILL.md
@@ -202,6 +205,7 @@ skills/
 │   ├── agent-ready/SKILL.md
 │   ├── spike-off/SKILL.md
 │   ├── safe-rewrite/SKILL.md
+│   ├── smart-rewrite/SKILL.md
 │   ├── agent-complete/SKILL.md
 │   ├── guardrails/SKILL.md
 │   ├── draft-rfc/SKILL.md
@@ -209,9 +213,8 @@ skills/
 │   ├── runbook/SKILL.md
 │   ├── let-it-ship/SKILL.md
 │   └── tune-up/SKILL.md
-├── templates/                     # Standard Frontier templates
+├── templates/                     # Standard D-Level templates
 │   ├── AGENTS.md.template         # Core steering contract
-│   ├── FRONTIER.md.template       # Environment harness config
 │   ├── CHANGELOG.md.template      # Standard Keep a Changelog template
 │   ├── release-impact.md.template # Production release impact assessment
 │   ├── deep-spec.md.template      # Phase 1 deep reverse-engineering audit

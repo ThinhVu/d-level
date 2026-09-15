@@ -40,9 +40,9 @@ After an autonomous build or refactor loop finishes (`/let-it-cook` or `/agent-c
 
 ## Standalone & Synergy Characteristics
 - **Standalone**: Reads `git log`, inspects diffs, updates `CHANGELOG.md`, and writes `docs/releases/vX.Y.Z.md`.
-- **Synergy with Frontier Suite**:
+- **Synergy with D-Level Suite**:
   - The natural culmination of `/let-it-cook` and `/agent-complete`.
-  - Dispatches release announcements through `.frontier/scripts/notify.js` to Discord, Telegram, or Slack.
+  - Dispatches release announcements through `.d-level/scripts/notify.js` to Discord, Telegram, or Slack.
 
 ---
 
@@ -83,7 +83,7 @@ The agent produces a complete release documentation package:
 
 ### Step 5: Safety Review & Dispatch Release Notification
 1. **Safety Gate**: Never push release branches or tags to remote git (`git push`) without explicit user review and approval.
-2. If `.frontier/scripts/notify.js` exists, dispatch the release announcement:
+2. If `.d-level/scripts/notify.js` exists, dispatch the release announcement:
 ```bash
-node .frontier/scripts/notify.js --event=batch_done --title="Release vX.Y.Z Ready to Ship" --message="Changelog, release notes, impact assessment & verification checklist compiled"
+node .d-level/scripts/notify.js --event=batch_done --title="Release vX.Y.Z Ready to Ship" --message="Changelog, release notes, impact assessment & verification checklist compiled"
 ```

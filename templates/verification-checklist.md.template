@@ -4,8 +4,8 @@
 > **Release Date**: {{DATE}}  
 > **Status**: `[PENDING_VERIFICATION | PASSED | FAILED]`  
 > **Target Environment**: `[STAGING | UAT | CANARY | PRODUCTION]`  
-> **Prepared by**: Frontier Agent via `/let-it-ship` (or `/agent-complete`)  
-> **AI-First Autonomous Alternative**: See [`templates/verification-protocol.md.template`](file:///Users/macbook/IdeaProjects/vuxify/frontier-engineering/templates/verification-protocol.md.template) for agent-executable verification with captured proof artifacts.
+> **Prepared by**: D-Level Agent via `/let-it-ship` (or `/agent-complete`)  
+> **AI-First Autonomous Alternative**: See [`templates/verification-protocol.md.template`](templates/verification-protocol.md.template) for agent-executable verification with captured proof artifacts.
 
 ---
 

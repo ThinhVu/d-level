@@ -1,4 +1,4 @@
-# Frontier Engineering Tuning Log
+# D-Level Engineering Tuning Log
 
 Record sessions where the agent made a wrong turn, hit a snag, or needed human intervention. Use `/tune-up` to append new entries and crystallize permanent rules into `AGENTS.md`.
 
@@ -17,6 +17,6 @@ Record sessions where the agent made a wrong turn, hit a snag, or needed human i
 
 ## Session History
 
-### [Initial Setup] Repository Frontier Onboarding
-- **Context**: Initialized repository with `/setup-frontier-engineering`.
+### [Initial Setup] Repository D-Level Onboarding
+- **Context**: Initialized repository with `/setup-d-level`.
 - **Status**: Steering guidelines, validation loops, and guardrails established.

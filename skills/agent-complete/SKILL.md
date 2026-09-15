@@ -36,7 +36,7 @@ Refactoring enterprise legacy code (monoliths, untyped frameworks, tightly coupl
 /agent-complete legacy/api/orders to src/domains/orders --frameworks Express,TypeScript,Zod
 ```
 
-You can also specify parameters via a side-car file `.frontier/modernize.json`:
+You can also specify parameters via a side-car file `.d-level/modernize.json`:
 ```json
 {
   "sourcePath": "src/legacy/subsystem",
@@ -112,9 +112,9 @@ For each ticket in migration-tickets.md:
   3. Execute verification command (npm test / pytest / cargo test).
   4. If test fails: Read diagnostics, self-correct, and re-run (up to 5 attempts).
   5. If stuck on same failure 5 times: Trigger Circuit Breaker:
-     node .frontier/scripts/notify.js --event=circuit_breaker --title="Blocked: [Ticket Title]"
+     node .d-level/scripts/notify.js --event=circuit_breaker --title="Blocked: [Ticket Title]"
   6. If passed: Trigger sub-task notification:
-     node .frontier/scripts/notify.js --event=task_done --title="Completed: [Ticket Title]"
+     node .d-level/scripts/notify.js --event=task_done --title="Completed: [Ticket Title]"
   7. Commit atomically and advance to next ticket.
 ```
 
@@ -132,5 +132,5 @@ Once all tickets are implemented:
 5. **Safety Gate**: Never push modernized branches to remote git (`git push`) without explicit user review and approval.
 6. **Batch Complete Notification**:
    ```bash
-   node .frontier/scripts/notify.js --event=batch_done --title="Modernization Completed" --message="All tickets passed behavioral parity"
+   node .d-level/scripts/notify.js --event=batch_done --title="Modernization Completed" --message="All tickets passed behavioral parity"
    ```

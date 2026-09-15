@@ -20,7 +20,7 @@ Reading every line of agent-generated code manually does not scale. But letting 
 
 ## Standalone & Synergy Characteristics
 - **Standalone**: Analyzes `git diff` directly against production-grade engineering standards.
-- **Synergy with Frontier Suite**: Acts as the senior quality gatekeeper following `/let-it-cook` or `/agent-complete`, auditing upstream/downstream blast radius, concurrency race conditions, secret leaks, and security boundary integrity before shipping via `/let-it-ship`.
+- **Synergy with D-Level Suite**: Acts as the senior quality gatekeeper following `/let-it-cook` or `/agent-complete`, auditing upstream/downstream blast radius, concurrency race conditions, secret leaks, and security boundary integrity before shipping via `/let-it-ship`.
 
 ---
 

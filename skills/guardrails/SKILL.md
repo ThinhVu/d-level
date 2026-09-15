@@ -22,8 +22,8 @@ To run agents for hours or overnight with peace of mind, you must have hard boun
 - Triggered by typing `/guardrails [audit | enforce | add-rule]`.
 
 ## Standalone & Synergy Characteristics
-- **Standalone**: Directly inspects `.gitignore`, environment variables, git hooks, and writes safety policies into `AGENTS.md` and `.frontier/guardrails.json`.
-- **Synergy with Frontier Suite**: Establishes strict safety invariants (secret shielding, destructive command blocking, git push gates) that protect the repository during unsupervised `/let-it-cook` or `/agent-complete` execution.
+- **Standalone**: Directly inspects `.gitignore`, environment variables, git hooks, and writes safety policies into `AGENTS.md` and `.d-level/guardrails.json`.
+- **Synergy with D-Level Suite**: Establishes strict safety invariants (secret shielding, destructive command blocking, git push gates) that protect the repository during unsupervised `/let-it-cook` or `/agent-complete` execution.
 
 ---
 

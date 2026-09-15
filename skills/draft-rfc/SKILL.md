@@ -20,7 +20,7 @@ It conducts repository research, generates system topology diagrams, outlines AP
 
 ## Standalone & Synergy Characteristics
 - **Standalone**: Scans the codebase, analyzes existing schemas, and outputs standard Markdown RFCs with Mermaid diagrams.
-- **Synergy with Frontier Suite**: Elevates requirements captured via `/write-intent` into full technical architecture proposals, defining the schema contracts and migration strategies before launching `/let-it-cook`.
+- **Synergy with D-Level Suite**: Elevates requirements captured via `/write-intent` into full technical architecture proposals, defining the schema contracts and migration strategies before launching `/let-it-cook`.
 
 ---
 

@@ -19,14 +19,14 @@ Agents are only as productive as the codebase they operate within. `/agent-ready
 
 ## Standalone & Synergy Characteristics
 - **Standalone**: Analyzes folder architecture, exports, types, and writes module-level READMEs and architectural steering files.
-- **Synergy with Frontier Suite**: Forms the "Definition of Ready" (DoR) that prepares the technical scaffolding (strict typing, fast builds, isolated module scopes, script automation) before executing `/agent-complete` (DoD) or `/let-it-cook`.
+- **Synergy with D-Level Suite**: Forms the "Definition of Ready" (DoR) that prepares the technical scaffolding (strict typing, fast builds, isolated module scopes, script automation) before executing `/agent-complete` (DoD) or `/let-it-cook`.
 
 ---
 
 ## Execution Workflow
 
 ### Step 1: Agent Friction Audit
-The agent inspects the target directory against the **Frontier Agent-Readiness Checklist**:
+The agent inspects the target directory against the **D-Level Agent-Readiness Checklist**:
 1. **Module Boundaries**: Are modules isolated with clean public barrels/index files, or are there circular spaghetti imports?
 2. **Type Safety**: Are types loose (`any`, implicit types) or strictly defined with compiler guarantees?
 3. **Build & Error Feedback**: Do build tools report readable line numbers and actionable error messages?

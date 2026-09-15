@@ -23,7 +23,7 @@ This skill stops the "vague prompt -> bad code -> rollback" cycle. It takes a ra
 
 ## Standalone & Synergy Characteristics
 - **Standalone**: Directly drafts an Intent Specification (`docs/intent/<task-slug>.md`) with verification checklists ready for `/let-it-cook`.
-- **Synergy with Frontier Suite**: Acts as the essential first stage of the Frontier Teams lifecycle, establishing unambiguous, machine-verifiable acceptance criteria so `/let-it-cook` can run completely unsupervised.
+- **Synergy with D-Level Suite**: Acts as the essential first stage of the D-Level Teams lifecycle, establishing unambiguous, machine-verifiable acceptance criteria so `/let-it-cook` can run completely unsupervised.
 
 ---
 

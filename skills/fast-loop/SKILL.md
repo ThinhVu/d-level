@@ -20,7 +20,7 @@ Code generation is instantaneous; waiting 5 minutes for CI or a slow test runner
 
 ## Standalone & Synergy Characteristics
 - **Standalone**: Analyzes test configurations (Vitest, Jest, Pytest, Playwright) and sets up fast targeted watch/run scripts and mocks.
-- **Synergy with Frontier Suite**: Provides the blazing-fast (<10s) testing foundation that powers the autonomous self-correcting execution in `/let-it-cook` and `/agent-complete`.
+- **Synergy with D-Level Suite**: Provides the blazing-fast (<10s) testing foundation that powers the autonomous self-correcting execution in `/let-it-cook` and `/agent-complete`.
 
 ---
 
@@ -37,4 +37,4 @@ Depending on the project stack:
 - **Property-Based Testing**: Add fast invariant assertions (e.g. `fast-check` in TS, `hypothesis` in Python) that generate 100 randomized inputs to catch edge cases in <1s.
 
 ### Step 3: Register in Steering Files
-Save the newly configured fast command in `AGENTS.md` and `.frontier/config.json` so all subsequent agent sessions immediately utilize the optimized loop.
+Save the newly configured fast command in `AGENTS.md` and `.d-level/config.json` so all subsequent agent sessions immediately utilize the optimized loop.

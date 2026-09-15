@@ -20,7 +20,7 @@ Feed it error logs, stack traces, commit IDs, or bug descriptions. It correlates
 
 ## Standalone & Synergy Characteristics
 - **Standalone**: Generates complete blameless postmortems with timeline tables, root-cause graphs, and actionable preventive tickets.
-- **Synergy with Frontier Suite**: Directly feeds preventive invariants into `/tune-up` (updating `AGENTS.md`) and operational fixes into `/runbook`, preventing repeat incidents.
+- **Synergy with D-Level Suite**: Directly feeds preventive invariants into `/tune-up` (updating `AGENTS.md`) and operational fixes into `/runbook`, preventing repeat incidents.
 
 ---
 
