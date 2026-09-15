@@ -1,7 +1,0 @@
-node_modules/
-.DS_Store
-*.log
-.test-skills/
-.d-level/notifications.json
-dist/
-.tmp/
