@@ -38,10 +38,22 @@ Before touching a single line of production code:
 Delete or move the old internal implementation into a temporary backup branch. Do not cling to old lines of code or nurse first drafts.
 
 ### Step 3: Rebuild Clean Implementation
-1. Write the new implementation from the ground up using modern conventions, strict typing, and clean architecture.
+1. Write the new implementation from the ground up using clean architecture and strict typing, while strictly matching the host codebase's established style and syntax conventions.
 2. Ensure every exported symbol in the locked boundary contract behaves identically to specification.
 3. Run the boundary contract tests continuously until 100% passing.
 4. Run project-wide integration tests to verify zero regressions for consumers.
 
 ### Step 4: Verification Summary
 Show the before/after comparison: lines of code eliminated, performance improvements, and proof of passing boundary contracts.
+
+---
+
+## Formatting Guardrails: Zero Cosmetic Churn
+
+Rewriting a module does **not** grant license to impose unsolicited formatting opinions or "textbook perfection". Unnecessary stylistic churn creates noisy diffs, obscures architectural intent, and frustrates code reviewers.
+
+| Anti-Pattern | Why It Is Harmful | Required Behavior |
+| :--- | :--- | :--- |
+| **Unsolicited "Perfection"** (e.g., auto-inserting semicolons, swapping quote styles, adding/removing trailing commas, altering bracket spacing) | Injects cosmetic changes that distract human reviewers and pollute git blame history. | **Mirror the Host Codebase**: Inspect existing files, linters, or formatter configs (`.editorconfig`, `.prettierrc`, ESLint, Ruff, etc.). If the project omits semicolons or uses single quotes, adhere strictly to that convention. |
+| **Format Creep & Diff Bloat** | Blindly reformatting untouched lines, surrounding functions, or adjacent imports. | **Keep Diffs Surgical**: Only touch what is directly necessary for the rewritten module. Never re-indent, re-space, or "prettify" code outside the rewrite scope. |
+| **Stylistic Opinion Imposition** | Overriding repository-specific conventions with generic AI default preferences. | Respect established repository idioms across all languages (naming, punctuation, indentation, casing, spacing). Never reformat for subjective aesthetic preference. |

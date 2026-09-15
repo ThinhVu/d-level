@@ -100,3 +100,4 @@ Produce a clean before/after report:
 | **Cargo-Cult Compatibility** | Fearing to delete internal functions "just in case someone needs it in 2 years". | If grep reveals 0 callers in a closed-world repo, **delete it immediately**. |
 | **Test Suite Pollution** | Writing tests like `expect(typeof oldWrapper).toBe('function')` to fake "100% backward compatibility". | Never test dead scaffolding. Tests must assert domain invariants, not enshrine transitional wrappers. |
 | **Circular Dispatching** | Old wrapper calls new dispatcher, which requires old module to format data. | Sever the loop. Layout/worker modules only expose pure data/renderer hooks; the dispatcher controls the flow. |
+| **Cosmetic Churn & Diff Bloat** | Forcing AI-default formatting (semicolons, quote styles, indentation) onto migrated callers or new modules. | Strictly mirror host repository conventions. Do not introduce unsolicited cosmetic changes or reformat untouched surrounding code. |
